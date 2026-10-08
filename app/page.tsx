@@ -29,22 +29,6 @@ import {
 import { getUser } from "./lib/api";
 
 export default function HomePage() {
-  const [currentUser, setCurrentUser] = useState<any>(null);
-
-  useEffect(() => {
-    const u = getUser();
-    if (u) {
-      setCurrentUser(u);
-    }
-  }, []);
-
-  const getRoleDashboard = (role?: string) => {
-    const r = (role || "").toUpperCase();
-    if (r === "ADMIN") return "/admin/dashboard";
-    if (r === "STAFF") return "/staff/dashboard";
-    return "/viewer/inventory";
-  };
-
   return (
     <div style={{ minHeight: "100vh", background: "var(--background-base)", color: "var(--text-main)", fontFamily: "'Inter', system-ui, sans-serif" }}>
       {/* Top Navigation */}
@@ -95,13 +79,31 @@ export default function HomePage() {
               Tech Architecture
             </a>
 
-            {currentUser ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <Link
-                href={getRoleDashboard(currentUser.role)}
+                href="/login"
+                style={{
+                  background: "rgba(255, 255, 255, 0.06)",
+                  border: "1px solid var(--glass-border)",
+                  color: "var(--text-main)",
+                  padding: "9px 18px",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  fontSize: "0.9rem",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px"
+                }}
+              >
+                <LogIn size={16} /> Sign In
+              </Link>
+              <Link
+                href="/signup"
                 style={{
                   background: "var(--primary)",
                   color: "white",
-                  padding: "10px 20px",
+                  padding: "9px 18px",
                   borderRadius: "10px",
                   textDecoration: "none",
                   fontWeight: 600,
@@ -112,49 +114,9 @@ export default function HomePage() {
                   boxShadow: "var(--shadow-glow)"
                 }}
               >
-                <LayoutDashboard size={18} />
-                Go to {currentUser.role} Portal
+                <UserPlus size={16} /> Register
               </Link>
-            ) : (
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <Link
-                  href="/login"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.06)",
-                    border: "1px solid var(--glass-border)",
-                    color: "var(--text-main)",
-                    padding: "9px 18px",
-                    borderRadius: "10px",
-                    textDecoration: "none",
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px"
-                  }}
-                >
-                  <LogIn size={16} /> Sign In
-                </Link>
-                <Link
-                  href="/signup"
-                  style={{
-                    background: "var(--primary)",
-                    color: "white",
-                    padding: "9px 18px",
-                    borderRadius: "10px",
-                    textDecoration: "none",
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    boxShadow: "var(--shadow-glow)"
-                  }}
-                >
-                  <UserPlus size={16} /> Register
-                </Link>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </header>
